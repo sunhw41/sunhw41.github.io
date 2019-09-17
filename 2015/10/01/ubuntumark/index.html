@@ -7,7 +7,7 @@
 
 
 
-<title>OSX下解决Gradle同步失败的问题 | 孙宏伟的个人网站.</title>
+<title>Ubuntu的安装 | 孙宏伟的个人网站.</title>
 
 
 
@@ -169,7 +169,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">OSX下解决Gradle同步失败的问题</h1>
+            <h1 class="post-title">Ubuntu的安装</h1>
             
                 <div class="post-meta">
                     
@@ -178,14 +178,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">December 12, 2016&nbsp;&nbsp;12:20:15</a>
+                        Date: <a href="#">October 1, 2015&nbsp;&nbsp;12:02:19</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Android/">Android</a>
+                                <a href="/categories/Ubuntu/">Ubuntu</a>
                             
                         </span>
                     
@@ -194,18 +194,32 @@
         </header>
 
         <div class="post-content">
-            <h4 id="1、下载Android-Studio"><a href="#1、下载Android-Studio" class="headerlink" title="1、下载Android Studio"></a>1、下载Android Studio</h4><p>&ensp; &ensp; &ensp; &ensp; OSX下Android Studio的安装过程就不多叙述了,和安装其他软件方法一样,需要注意的是国外的Android开发者网站被封了,这里提供一个Android Studio的<a href="https://developer.android.google.cn/studio/" target="_blank" rel="noopener">下载地址</a>.</p>
-<p><img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/20161212_01.png?raw=true" alt="DownLoad Android Studio"></p>
-<h4 id="2、安装Android-Studio"><a href="#2、安装Android-Studio" class="headerlink" title="2、安装Android Studio"></a>2、安装Android Studio</h4><p>&ensp; &ensp; &ensp; &ensp; 我下载的是“android-studio-ide-173.4819257-mac.dmg”,下载好安装文件后双击,然后将其拖到App文件夹即可使用.</p>
-<p><img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/20161212_02.png?raw=true" alt="install Android Studio"></p>
-<h4 id="3、下载复制Gradle文件"><a href="#3、下载复制Gradle文件" class="headerlink" title="3、下载复制Gradle文件"></a>3、下载复制Gradle文件</h4><p>&ensp; &ensp; &ensp; &ensp; 但是在第一次启动Android Studio构建项目常常会出现卡住下载不动或者失败的的情况,下面介绍下如何解决这个问题.</p>
-<p>&ensp; &ensp; &ensp; &ensp; 首先需要找到“.gradle”目录,大部分位于“~/”目录下,进入”/Users/<em style="color: red">sun</em>/.gradle/wrapper/dists/gradle-4.4-all/<em style="color:red">9br9xq1tocpiv8o6njlyu5op1</em>“,其中<em style="color:red">红色字体</em>部分是我自己电脑的情况,可能会有不同,osx下使用”<strong>shift+command+.</strong>“可以查看隐藏的文件夹,进入到该文件夹删除文件夹内<em style="color:#FF00FF
-">“.part”</em>文件:</p>
-<p><img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/20161212_04.png?raw=true" alt="delete .part file"></p>
-<p>&ensp; &ensp; &ensp; &ensp; 然后登陆到<a href="https://services.gradle.org/distributions" target="_blank" rel="noopener">gradle资源</a>的网站下载对应的<a href="https://services.gradle.org/distributions/gradle-4.4-all.zip" target="_blank" rel="noopener">gradle-4.4-all.zip</a>,下载后不需要解压,直接复制到上述文件夹中.</p>
-<p><img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/20161212_03.png?raw=true" alt="gradle download"></p>
-<h4 id="4、重新启动Android-Studio"><a href="#4、重新启动Android-Studio" class="headerlink" title="4、重新启动Android Studio"></a>4、重新启动Android Studio</h4><p>&ensp; &ensp; &ensp; &ensp; 重新启动Android Studio即可解决gradle构建失败或者卡住的问题了.</p>
-<p><img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/20161212_05.png?raw=true" alt="run Android Studio"></p>
+            <h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>&ensp; &ensp; 前往<a href="https://remarkableapp.github.io/linux/download.html" target="_blank" rel="noopener">remarkable</a>下载安装文件或(<a href="https://remarkableapp.github.io/files/remarkable_1.87_all.deb" target="_blank" rel="noopener">点此下载</a>)，Ubuntu系统选择*.deb格式:</p>
+<p> <img src="/.com//download.png" alt="DownLoad Remarkable"></p>
+<hr>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>&ensp; &ensp; 下载完成后，打开终端找到文件所在目录，执行如下命令进行安装，终端会输出一些报错信息，是由于安装缺少依赖导致的:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i remarkable_1.87_all.deb</span><br></pre></td></tr></table></figure>
+
+
+<p> <img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/2018-09-10_02.png?raw=true" alt="Install Remarkable"></p>
+<hr>
+<h2 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h2><p>&ensp; &ensp; 安装依赖前先更新一下源:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<p> <img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/2018-09-10_03.png?raw=true" alt="Update Source"></p>
+<hr>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><p>&ensp; &ensp; 补充安装依赖项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  sudo apt-get install -f</span><br></pre></td></tr></table></figure>
+
+
+<p> <img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/2018-09-10_04.png?raw=true" alt="Update Source"></p>
+<hr>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>&ensp; &ensp;在终端启动，即可使用Remarkable：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  remarkable</span><br></pre></td></tr></table></figure>
+
+
+<p> <img src="https://github.com/sunhw41/sunhw41.github.io/blob/master/img/2018-09-10_05.png?raw=true" alt="Update Source"></p>
+<hr>
 
         </div>
 
@@ -229,11 +243,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/OSX/"># OSX</a>
+                        <a href="/tags/Ubuntu/"># Ubuntu</a>
                     
-                        <a href="/tags/Android-Studio/"># Android Studio</a>
+                        <a href="/tags/markdown/"># markdown</a>
                     
-                        <a href="/tags/Gradle/"># Gradle</a>
+                        <a href="/tags/remarkable/"># remarkable</a>
                     
                         
                 </span>
@@ -246,10 +260,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2018/06/21/2018-06-21-union-struct/">结构体包含联合体与数组的复制</a>
+                <a class="prev" rel="prev" href="/2016/12/12/2016-12-12-osx-androidstudio-gradle/">OSX下解决Gradle同步失败的问题</a>
             
-            
-            <a class="next" rel="next" href="/2015/10/01/ubuntumark/">Ubuntu的安装</a>
             
         </section>
 
