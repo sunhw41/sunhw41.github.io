@@ -7,7 +7,7 @@
 
 
 
-<title>NVMe硬盘上安装Ubuntu | 孙宏伟的个人网站.</title>
+<title>Ubuntu下Markdown编辑器的安装 | 孙宏伟的个人网站.</title>
 
 
 
@@ -171,7 +171,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">NVMe硬盘上安装Ubuntu</h1>
+            <h1 class="post-title">Ubuntu下Markdown编辑器的安装</h1>
             
                 <div class="post-meta">
                     
@@ -180,7 +180,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 8, 2019&nbsp;&nbsp;19:17:20</a>
+                        Date: <a href="#">September 28, 2016&nbsp;&nbsp;8:02:19</a>
                         </span>
                     
                     
@@ -196,34 +196,33 @@
         </header>
 
         <div class="post-content">
-            <h2 id="在NVMe硬盘上安装Ubuntu"><a href="#在NVMe硬盘上安装Ubuntu" class="headerlink" title="在NVMe硬盘上安装Ubuntu"></a>在NVMe硬盘上安装Ubuntu</h2><h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>&ensp;&ensp;&ensp;&ensp;今天在帮同事安装Ubuntu时遇到点困难,整理一下.同事的电脑是Dell inspire 5488,18年生产的.因为开发工具原因我们需要使用Ubuntu16.04(Kernel:4.15.0-29).因为是同事电脑,安装时没拍照,安装好后也不好再折腾一遍,就纯文字描述了.</p>
-<p>&ensp;&ensp;&ensp;&ensp;一开始采用UEFI的方式安装,启动后进入BIOS,发现了两个安装的U盘,随意选一个进入下一步,结果往下进行后提示如下:</p>
-<blockquote>
-<p>安装Ubuntu需要8.3G的控空间,而磁盘只有4G</p>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;以为是启动时的U盘选差了, 重启再选另外一个,仍然是这个原因,重新给U盘烧写系统仍是上述现象.</p>
-<p>&ensp;&ensp;&ensp;&ensp;后来决定放弃使用UEFI模式启动,使用Legacy方式,虽然可以安装系统,但是启动后提示找不到启动的设备.没法发现电脑的硬盘.</p>
+            <h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>&ensp; &ensp; 前往<a href="https://remarkableapp.github.io/linux/download.html" target="_blank" rel="noopener">remarkable</a>下载安装文件或(<a href="https://remarkableapp.github.io/files/remarkable_1.87_all.deb" target="_blank" rel="noopener">点此下载</a>)，Ubuntu系统选择*.deb格式:</p>
+<p> <img src="/2016/09/28/ubuntu-remarkable/download.png" alt="DownLoad Remarkable"></p>
 <hr>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>&ensp;&ensp;&ensp;&ensp;发送上述现象是因为该电脑为固态硬盘,BIOS中硬盘模式开启了Rapid ON的模式,硬盘在Linux系统中不是传统的 /dev/sd* 这样的形式存在的,所以找不到硬盘.</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>&ensp; &ensp; 下载完成后，打开终端找到文件所在目录，执行如下命令进行安装，终端会输出一些报错信息，是由于安装缺少依赖导致的:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i remarkable_1.87_all.deb</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/2016/09/28/ubuntu-remarkable/install.png" alt="Install Remarkable"></p>
 <hr>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>&ensp;&ensp;&ensp;&ensp;将BIOS的启动参数进行如下设置:</p>
-<blockquote>
-<ol>
-<li>采用Legacy方式启动;</li>
-<li>将硬盘模式更改为ACHI;</li>
-<li>将UEFI Boot Security 更改为Off;</li>
-</ol>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;然后重启进入BIOS界面,会有Legacy启动选项和UEFI启动选项,选择UEFI选项下的U盘作为启动介质,此时会提示在非UEFI模式下选择采用UEFI模式安装,同意该方式,继续下一步,直至安装结束.</p>
-<p>&ensp;&ensp;&ensp;&ensp;重启后进入到BIOS看一下,是否还存在Legacy这个启动选项,如果存在的话则将该方式关闭,并且将UEFI中的Security Boot 更改为Off即可正常使用.</p>
+<h2 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h2>
+
+<p>&ensp; &ensp; 安装依赖前先更新一下源:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/2016/09/28/ubuntu-remarkable/update.png" alt="Update Source"></p>
 <hr>
-<h3 id="关于UEFI和Leagacy"><a href="#关于UEFI和Leagacy" class="headerlink" title="关于UEFI和Leagacy"></a>关于UEFI和Leagacy</h3><blockquote>
-<p>UEFI技术较新,只支持64位操作系统,启动速度较快;</p>
-</blockquote>
-<blockquote>
-<p>Legacy是传统的启动模式,不能支持超过2T的硬盘;</p>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;更多区别和细节就百度一下吧,不细说了.</p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><p>&ensp; &ensp; 补充安装依赖项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  sudo apt-get install -f</span><br></pre></td></tr></table></figure>
+
+
+<p> <img src="/2016/09/28/ubuntu-remarkable/depend.png" alt="Update Source"></p>
+<hr>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>&ensp; &ensp;在终端启动，即可使用Remarkable：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  remarkable</span><br></pre></td></tr></table></figure>
+
+
+<p> <img src="/2016/09/28/ubuntu-remarkable/remarkable.png" alt="Update Source"></p>
+<hr>
 
         </div>
 
@@ -260,8 +259,8 @@
         </section>
         <section class="post-nav">
             
+                <a class="prev" rel="prev" href="/2018/06/21/union-struct/">结构体包含联合体与数组的复制</a>
             
-            <a class="next" rel="next" href="/2019/08/03/Linux-Kernel-Config/">Ubuntu内核的安装、删除与切换</a>
             
         </section>
 

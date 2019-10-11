@@ -7,7 +7,7 @@
 
 
 
-<title>NVMe硬盘上安装Ubuntu | 孙宏伟的个人网站.</title>
+<title>Ubuntu内核的安装、删除与切换 | 孙宏伟的个人网站.</title>
 
 
 
@@ -171,7 +171,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">NVMe硬盘上安装Ubuntu</h1>
+            <h1 class="post-title">Ubuntu内核的安装、删除与切换</h1>
             
                 <div class="post-meta">
                     
@@ -180,14 +180,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 8, 2019&nbsp;&nbsp;19:17:20</a>
+                        Date: <a href="#">August 3, 2019&nbsp;&nbsp;8:04:56</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Ubuntu/">Ubuntu</a>
+                                <a href="/categories/Linux/">Linux</a>
                             
                         </span>
                     
@@ -196,34 +196,36 @@
         </header>
 
         <div class="post-content">
-            <h2 id="在NVMe硬盘上安装Ubuntu"><a href="#在NVMe硬盘上安装Ubuntu" class="headerlink" title="在NVMe硬盘上安装Ubuntu"></a>在NVMe硬盘上安装Ubuntu</h2><h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>&ensp;&ensp;&ensp;&ensp;今天在帮同事安装Ubuntu时遇到点困难,整理一下.同事的电脑是Dell inspire 5488,18年生产的.因为开发工具原因我们需要使用Ubuntu16.04(Kernel:4.15.0-29).因为是同事电脑,安装时没拍照,安装好后也不好再折腾一遍,就纯文字描述了.</p>
-<p>&ensp;&ensp;&ensp;&ensp;一开始采用UEFI的方式安装,启动后进入BIOS,发现了两个安装的U盘,随意选一个进入下一步,结果往下进行后提示如下:</p>
-<blockquote>
-<p>安装Ubuntu需要8.3G的控空间,而磁盘只有4G</p>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;以为是启动时的U盘选差了, 重启再选另外一个,仍然是这个原因,重新给U盘烧写系统仍是上述现象.</p>
-<p>&ensp;&ensp;&ensp;&ensp;后来决定放弃使用UEFI模式启动,使用Legacy方式,虽然可以安装系统,但是启动后提示找不到启动的设备.没法发现电脑的硬盘.</p>
-<hr>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>&ensp;&ensp;&ensp;&ensp;发送上述现象是因为该电脑为固态硬盘,BIOS中硬盘模式开启了Rapid ON的模式,硬盘在Linux系统中不是传统的 /dev/sd* 这样的形式存在的,所以找不到硬盘.</p>
-<hr>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>&ensp;&ensp;&ensp;&ensp;将BIOS的启动参数进行如下设置:</p>
-<blockquote>
-<ol>
-<li>采用Legacy方式启动;</li>
-<li>将硬盘模式更改为ACHI;</li>
-<li>将UEFI Boot Security 更改为Off;</li>
-</ol>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;然后重启进入BIOS界面,会有Legacy启动选项和UEFI启动选项,选择UEFI选项下的U盘作为启动介质,此时会提示在非UEFI模式下选择采用UEFI模式安装,同意该方式,继续下一步,直至安装结束.</p>
-<p>&ensp;&ensp;&ensp;&ensp;重启后进入到BIOS看一下,是否还存在Legacy这个启动选项,如果存在的话则将该方式关闭,并且将UEFI中的Security Boot 更改为Off即可正常使用.</p>
-<hr>
-<h3 id="关于UEFI和Leagacy"><a href="#关于UEFI和Leagacy" class="headerlink" title="关于UEFI和Leagacy"></a>关于UEFI和Leagacy</h3><blockquote>
-<p>UEFI技术较新,只支持64位操作系统,启动速度较快;</p>
-</blockquote>
-<blockquote>
-<p>Legacy是传统的启动模式,不能支持超过2T的硬盘;</p>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;更多区别和细节就百度一下吧,不细说了.</p>
+            <h2 id="查看当前内核"><a href="#查看当前内核" class="headerlink" title="查看当前内核"></a>查看当前内核</h2><p>&ensp; &ensp;&ensp; &ensp; 可以通过以下命令查看当前安装了几个linux内核：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$dpkg</span> --get-selections | grep linux-image</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/08/03/Linux-Kernel-Config/grepKernel.png" alt="grepKernel"> </p>
+<p>&ensp; &ensp;&ensp; &ensp; 当有多个内核时，使用如下命令查看当前使用的是哪个版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$uname</span> -a</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/08/03/Linux-Kernel-Config/uname.png" alt="uname"> </p>
+<h2 id="配置启动顺序"><a href="#配置启动顺序" class="headerlink" title="配置启动顺序"></a>配置启动顺序</h2><p>&ensp; &ensp;&ensp; &ensp; 如果当前使用的内核为自己所需要的，无需做任何改动，如果电脑中有需要的内核，但是当前使用的不是，可以使用如下命令进行修改，首先查询需求内核的顺序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$grep</span> menuentry /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/08/03/Linux-Kernel-Config/menuentry.png" alt="menuentry"><br>&ensp; &ensp;&ensp; &ensp; 在输出的结果中找到这样的行：</p>
+<p><em style="color:orange">menuentry ‘Ubuntu, with Linux 4.8.0-36-generic’ –class ubuntu………</em></p>
+<p>&ensp; &ensp;&ensp; &ensp; 从0开始计算，找到自己所需要内核的顺序，假设在第4行，则序列为3(从0开始)，然后修改这个文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> vim /etc/default/grub</span><br></pre></td></tr></table></figure>
+
+<p>&ensp; &ensp;&ensp; &ensp; 找到<em style="color:red">“GRUB_DEFAULT=0”</em>这行，修改为<em style="color:red">“GRUB_DEFAULT=“1&gt;3”</em><br>或 <em style="color:red"> “GRUB_DEFAULT=”Ubuntu, with Linux 4.8.0-36-generic”(不推荐)</em>，然后保存：</p>
+<p>&ensp; &ensp;&ensp; &ensp; 执行如下命令更新grub，然后重启，用uname查看当前的内核版本是否已经变更：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> update-grub</span><br></pre></td></tr></table></figure>
+
+<p>&ensp; &ensp;&ensp; &ensp; 上述步骤对应的是系统启动是的GNU Grub的顺序，如果上述操作没生效，可以重启时按住Esc键，然后查看Ubuntu Advance的位置，进入后再查看所需要的内核的序号，然后更改按照下述方式更改：<br><em style="color:red">GRUB_DEFAULT=“2&gt;3”</em><br>(从上向下数，从0开始，假设Ubuntu Advance位置为2,所需内核位置为3)</p>
+<h2 id="安装指定内核"><a href="#安装指定内核" class="headerlink" title="安装指定内核"></a>安装指定内核</h2><p>&ensp; &ensp;&ensp; &ensp; 如果通过dpkg –get-selections 命令输出的内容没有所需要的内核，则需要新装，假设需要的内核版本为4.8.0-36，使用如下命令进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-get install linux-image-4.8.0-36-generic </span><br><span class="line"><span class="variable">$sudo</span> apt-get install linux-image-extra-4.8.0-36-generic</span><br></pre></td></tr></table></figure>
+
+<p>&ensp; &ensp;&ensp; &ensp; 内核成功安装后，再执行上述的命令讲自己的内核修改为默认启动即可</p>
+<p>&ensp; &ensp;&ensp; &ensp; 当然也可以前往<a href="https://mirrors.edge.kernel.org/pub/linux/kernel/" target="_blank" rel="noopener">LinuxKernel</a> 下载合适的内核版本，本地编译安装，此处不做过多描述。</p>
+<p>&ensp; &ensp;&ensp; &ensp; 如果由于安装时的设置，导致系统内核过多，占用/boot的空间，因此需要删除不必要的内核，执行以下命令删除即可    </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-get purge linux-image-4.8.0-36-generic</span><br></pre></td></tr></table></figure>
+
+<p>&ensp; &ensp;&ensp; &ensp; 使用remove也可以，但是不会删除配置文件，purge会删除相关的配置文件，避免留下冗余的内容，当尝试新内核时，由于新内核存在很多不稳定性，因此建议保留1～2个稳定的内核，以免意外。</p>
 
         </div>
 
@@ -247,7 +249,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Ubuntu/"># Ubuntu</a>
+                        <a href="/tags/Linux/"># Linux</a>
                     
                         
                 </span>
@@ -260,8 +262,10 @@
         </section>
         <section class="post-nav">
             
+                <a class="prev" rel="prev" href="/2019/10/08/Ubuntu-NVMe/">NVMe硬盘上安装Ubuntu</a>
             
-            <a class="next" rel="next" href="/2019/08/03/Linux-Kernel-Config/">Ubuntu内核的安装、删除与切换</a>
+            
+            <a class="next" rel="next" href="/2019/07/10/Linux-kernel-compile/">Linux内核的编译方法</a>
             
         </section>
 

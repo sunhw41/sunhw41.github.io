@@ -7,7 +7,7 @@
 
 
 
-<title>NVMe硬盘上安装Ubuntu | 孙宏伟的个人网站.</title>
+<title>OSX下解决Gradle同步失败的问题 | 孙宏伟的个人网站.</title>
 
 
 
@@ -171,7 +171,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">NVMe硬盘上安装Ubuntu</h1>
+            <h1 class="post-title">OSX下解决Gradle同步失败的问题</h1>
             
                 <div class="post-meta">
                     
@@ -180,14 +180,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 8, 2019&nbsp;&nbsp;19:17:20</a>
+                        Date: <a href="#">August 3, 2018&nbsp;&nbsp;8:04:56</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Ubuntu/">Ubuntu</a>
+                                <a href="/categories/Android/">Android</a>
                             
                         </span>
                     
@@ -196,34 +196,18 @@
         </header>
 
         <div class="post-content">
-            <h2 id="在NVMe硬盘上安装Ubuntu"><a href="#在NVMe硬盘上安装Ubuntu" class="headerlink" title="在NVMe硬盘上安装Ubuntu"></a>在NVMe硬盘上安装Ubuntu</h2><h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>&ensp;&ensp;&ensp;&ensp;今天在帮同事安装Ubuntu时遇到点困难,整理一下.同事的电脑是Dell inspire 5488,18年生产的.因为开发工具原因我们需要使用Ubuntu16.04(Kernel:4.15.0-29).因为是同事电脑,安装时没拍照,安装好后也不好再折腾一遍,就纯文字描述了.</p>
-<p>&ensp;&ensp;&ensp;&ensp;一开始采用UEFI的方式安装,启动后进入BIOS,发现了两个安装的U盘,随意选一个进入下一步,结果往下进行后提示如下:</p>
-<blockquote>
-<p>安装Ubuntu需要8.3G的控空间,而磁盘只有4G</p>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;以为是启动时的U盘选差了, 重启再选另外一个,仍然是这个原因,重新给U盘烧写系统仍是上述现象.</p>
-<p>&ensp;&ensp;&ensp;&ensp;后来决定放弃使用UEFI模式启动,使用Legacy方式,虽然可以安装系统,但是启动后提示找不到启动的设备.没法发现电脑的硬盘.</p>
-<hr>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>&ensp;&ensp;&ensp;&ensp;发送上述现象是因为该电脑为固态硬盘,BIOS中硬盘模式开启了Rapid ON的模式,硬盘在Linux系统中不是传统的 /dev/sd* 这样的形式存在的,所以找不到硬盘.</p>
-<hr>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>&ensp;&ensp;&ensp;&ensp;将BIOS的启动参数进行如下设置:</p>
-<blockquote>
-<ol>
-<li>采用Legacy方式启动;</li>
-<li>将硬盘模式更改为ACHI;</li>
-<li>将UEFI Boot Security 更改为Off;</li>
-</ol>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;然后重启进入BIOS界面,会有Legacy启动选项和UEFI启动选项,选择UEFI选项下的U盘作为启动介质,此时会提示在非UEFI模式下选择采用UEFI模式安装,同意该方式,继续下一步,直至安装结束.</p>
-<p>&ensp;&ensp;&ensp;&ensp;重启后进入到BIOS看一下,是否还存在Legacy这个启动选项,如果存在的话则将该方式关闭,并且将UEFI中的Security Boot 更改为Off即可正常使用.</p>
-<hr>
-<h3 id="关于UEFI和Leagacy"><a href="#关于UEFI和Leagacy" class="headerlink" title="关于UEFI和Leagacy"></a>关于UEFI和Leagacy</h3><blockquote>
-<p>UEFI技术较新,只支持64位操作系统,启动速度较快;</p>
-</blockquote>
-<blockquote>
-<p>Legacy是传统的启动模式,不能支持超过2T的硬盘;</p>
-</blockquote>
-<p>&ensp;&ensp;&ensp;&ensp;更多区别和细节就百度一下吧,不细说了.</p>
+            <h2 id="1、下载Android-Studio"><a href="#1、下载Android-Studio" class="headerlink" title="1、下载Android Studio"></a>1、下载Android Studio</h2><p>&ensp; &ensp;&ensp; &ensp;  OSX下Android Studio的安装过程就不多叙述了,和安装其他软件方法一样,需要注意的是国外的Android开发者网站被封了,这里提供一个Android Studio的<a href="https://developer.android.google.cn/studio/" target="_blank" rel="noopener">下载地址</a>.</p>
+<p><img src="/2018/08/03/mac-androidstudio/download.png" alt="DownLoad Android Studio"></p>
+<h2 id="2、安装Android-Studio"><a href="#2、安装Android-Studio" class="headerlink" title="2、安装Android Studio"></a>2、安装Android Studio</h2><p>&ensp; &ensp;&ensp; &ensp; 我下载的是“android-studio-ide-173.4819257-mac.dmg”,下载好安装文件后双击,然后将其拖到App文件夹即可使用.</p>
+<p><img src="/2018/08/03/mac-androidstudio/install.png" alt="install Android Studio"></p>
+<h2 id="3、下载复制Gradle文件"><a href="#3、下载复制Gradle文件" class="headerlink" title="3、下载复制Gradle文件"></a>3、下载复制Gradle文件</h2><p>&ensp; &ensp; &ensp; &ensp; 但是在第一次启动Android Studio构建项目常常会出现卡住下载不动或者失败的的情况,下面介绍下如何解决这个问题.</p>
+<p>&ensp; &ensp;&ensp; &ensp; 首先需要找到“.gradle”目录,大部分位于“~/”目录下,进入”/Users/<em style="color: red">sun</em>/.gradle/wrapper/dists/gradle-4.4-all/<em style="color:red">9br9xq1tocpiv8o6njlyu5op1</em>“,其中<em style="color:red">红色字体</em>部分是我自己电脑的情况,可能会有不同,osx下使用”<strong>shift+command+.</strong>“可以查看隐藏的文件夹,进入到该文件夹删除文件夹内<em style="color:#FF00FF
+">“.part”</em>文件:</p>
+<p><img src="/2018/08/03/mac-androidstudio/gradlepath.png" alt="delete .part file"></p>
+<p>&ensp; &ensp;&ensp; &ensp; 然后登陆到<a href="https://services.gradle.org/distributions" target="_blank" rel="noopener">gradle资源</a>的网站下载对应的<a href="https://services.gradle.org/distributions/gradle-4.4-all.zip" target="_blank" rel="noopener">gradle-4.4-all.zip</a>,下载后不需要解压,直接复制到上述文件夹中.</p>
+<p><img src="/2018/08/03/mac-androidstudio/gradlefile.png" alt="gradle download"></p>
+<h2 id="4、重新启动Android-Studio"><a href="#4、重新启动Android-Studio" class="headerlink" title="4、重新启动Android Studio"></a>4、重新启动Android Studio</h2><p>&ensp; &ensp; &ensp; &ensp; 重新启动Android Studio即可解决gradle构建失败或者卡住的问题了.</p>
+<p><img src="/2018/08/03/mac-androidstudio/androidstudio.png" alt="run Android Studio"></p>
 
         </div>
 
@@ -247,7 +231,9 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Ubuntu/"># Ubuntu</a>
+                        <a href="/tags/OSX/"># OSX</a>
+                    
+                        <a href="/tags/Android-Studio/"># Android Studio</a>
                     
                         
                 </span>
@@ -260,8 +246,10 @@
         </section>
         <section class="post-nav">
             
+                <a class="prev" rel="prev" href="/2019/07/10/Linux-kernel-compile/">Linux内核的编译方法</a>
             
-            <a class="next" rel="next" href="/2019/08/03/Linux-Kernel-Config/">Ubuntu内核的安装、删除与切换</a>
+            
+            <a class="next" rel="next" href="/2018/06/21/union-struct/">结构体包含联合体与数组的复制</a>
             
         </section>
 
